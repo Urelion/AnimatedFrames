@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
@@ -163,7 +163,7 @@ public class Metrics {
 			if (chart == null) { // If the chart is null, we skip it
 				continue;
 			}
-			customCharts.add(chart);
+			customCharts.put(chart);
 		}
 		data.put("customCharts", customCharts);
 
@@ -222,7 +222,7 @@ public class Metrics {
 			}
 			// Found one!
 			try {
-				pluginData.add(service.getMethod("getPluginData").invoke(Bukkit.getServicesManager().load(service)));
+				pluginData.put(service.getMethod("getPluginData").invoke(Bukkit.getServicesManager().load(service)));
 			} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) { }
 		}
 
@@ -543,7 +543,7 @@ public class Metrics {
 			}
 			for (Map.Entry<String, Integer> entry : map.entrySet()) {
 				JSONArray categoryValues = new JSONArray();
-				categoryValues.add(entry.getValue());
+				categoryValues.put(entry.getValue());
 				values.put(entry.getKey(), categoryValues);
 			}
 			data.put("values", values);
@@ -591,7 +591,7 @@ public class Metrics {
 				allSkipped = false;
 				JSONArray categoryValues = new JSONArray();
 				for (int categoryValue : entry.getValue()) {
-					categoryValues.add(categoryValue);
+					categoryValues.put(categoryValue);
 				}
 				values.put(entry.getKey(), categoryValues);
 			}
